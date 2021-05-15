@@ -1,0 +1,41 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package auth;
+
+message AuthSession {
+  int32 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+}
+
+message CreateAuthSessionRequest {
+  int32 user_id = 1;
+}
+
+message CreateAuthSessionResponse {
+  bool is_session_created = 1;
+  string access_secret = 2;
+  string refresh_secret = 3;
+}
+
+message ValidateAuthSessionRequest {
+  int32 user_id = 1;
+  string access_secret = 2;
+}
+
+message ValidateAuthSessionResponse {
+  bool is_session_exists = 1;
+  bool is_session_expired = 2;
+  AuthSession auth_session = 3;
+}
+
+message DeleteAuthSessionResponse {
+  bool is_session_deleted = 1;
+}
+
+service AuthService {
+  rpc createAuthSession(CreateAuthSessionRequest) returns(CreateAuthSessionResponse);
+  rpc validateAuthSession(ValidateAuthSessionRequest) returns (ValidateAuthSessionResponse);
+  rpc deleteAuthSession(CreateAuthSessionRequest) returns (DeleteAuthSessionResponse);
+}
