@@ -3,39 +3,76 @@ import "google/protobuf/timestamp.proto";
 
 package auth;
 
-message AuthSession {
+message AccessSession {
   int32 id = 1;
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp updated_at = 3;
 }
 
-message CreateAuthSessionRequest {
+message CreateAccessSessionRequest {
   int32 user_id = 1;
 }
 
-message CreateAuthSessionResponse {
-  bool is_session_created = 1;
-  string access_secret = 2;
-  string refresh_secret = 3;
+message CreateAccessSessionResponse {
+  bool is_access_session_created = 1;
+  bool is_refresh_session_created = 2;
+  string access_secret = 3;
+  string refresh_secret = 4;
 }
 
-message ValidateAuthSessionRequest {
+message ValidateAccessSessionRequest {
   int32 user_id = 1;
   string access_secret = 2;
 }
 
-message ValidateAuthSessionResponse {
+message ValidateAccessSessionResponse {
   bool is_session_exists = 1;
   bool is_session_expired = 2;
-  AuthSession auth_session = 3;
+  AccessSession access_session = 3;
 }
 
-message DeleteAuthSessionResponse {
+message DeleteAccessSessionRequest {
+  int32 user_id = 1;
+}
+
+message DeleteAccessSessionResponse {
   bool is_session_deleted = 1;
 }
 
+message ValidateRefreshSessionRequest {
+  int32 user_id = 1;
+  string refresh_secret = 2;
+}
+
+message ValidateRefreshSessionResponse {
+  bool is_session_exists = 1;
+  bool is_session_expired = 2;
+}
+
+message DeleteRefreshSessionRequest {
+  int32 user_id = 1;
+  string refresh_secret = 2;
+}
+
+message DeleteRefreshSessionResponse {
+  bool is_session_deleted = 1;
+}
+
+message DeleteAllUserSessionsRequest {
+  int32 user_id = 1;
+}
+
+message DeleteAllUserSessionsResponse {
+  bool is_sessions_deleted = 1;
+}
+
 service AuthService {
-  rpc createAuthSession(CreateAuthSessionRequest) returns(CreateAuthSessionResponse);
-  rpc validateAuthSession(ValidateAuthSessionRequest) returns (ValidateAuthSessionResponse);
-  rpc deleteAuthSession(CreateAuthSessionRequest) returns (DeleteAuthSessionResponse);
+  rpc createAccessSession(CreateAccessSessionRequest) returns(CreateAccessSessionResponse);
+  rpc validateAccessSession(ValidateAccessSessionRequest) returns (ValidateAccessSessionResponse);
+  rpc deleteAccessSession(CreateAccessSessionRequest) returns (DeleteAccessSessionResponse);
+
+  rpc validateRefreshSession(ValidateRefreshSessionRequest) returns (ValidateRefreshSessionResponse);
+  rpc deleteRefreshSession(DeleteRefreshSessionRequest) returns (DeleteRefreshSessionResponse);
+
+  rpc deleteAllUserSessions(DeleteAllUserSessionsRequest) returns (DeleteAllUserSessionsResponse);
 }
