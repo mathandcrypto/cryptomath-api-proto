@@ -13,7 +13,8 @@ message GenerateTaskRequest {
 
 message GenerateTaskResponse {
   bool is_task_generated = 1;
-  TaskPayload task_payload = 2;
+  string math = 2;
+  TaskPayload task_payload = 3;
 }
 
 message ValidateTaskRequest {
