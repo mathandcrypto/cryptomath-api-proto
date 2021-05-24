@@ -1,4 +1,4 @@
-rm -rf ./proto/build
+rm -rf ./types
 
 protoc \
   --plugin=./node_modules/ts-proto/protoc-gen-ts_proto \
@@ -7,6 +7,6 @@ protoc \
   --ts_proto_opt=useDate=true \
   ./proto/*.proto
 
-mv ./proto/proto ./proto/build
+mv ./proto/proto ./types
 
-tsc proto/build/*.ts
+tsc types/*.ts
