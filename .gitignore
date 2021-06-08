@@ -1,6 +1,6 @@
 # compiled output
 /node_modules
-/proto/build/*
+/types/*
 /proto/google/*
 
 # IDE

@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package captcha;
+
+message TaskPayload {
+  string uuid = 1;
+  repeated int32 params = 2;
+}
+
+message GenerateTaskRequest {
+  int32 difficulty = 1;
+}
+
+message GenerateTaskResponse {
+  bool is_task_generated = 1;
+  string math = 2;
+  TaskPayload task_payload = 3;
+}
+
+message ValidateTaskRequest {
+  string uuid = 1;
+  repeated int32 params = 2;
+  int32 answer = 3;
+}
+
+message ValidateTaskResponse {
+  bool is_task_found = 1;
+  bool is_answer_correct = 2;
+}
+
+service CaptchaService {
+  rpc generateTask(GenerateTaskRequest) returns (GenerateTaskResponse);
+  rpc validateTask(ValidateTaskRequest) returns (ValidateTaskResponse);
+}

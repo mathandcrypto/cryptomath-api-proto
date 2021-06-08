@@ -8,11 +8,37 @@ message User {
   string display_name = 3;
 }
 
+message CreatedUser {
+  int32 id = 1;
+  string confirm_code = 2;
+}
+
+message CreateUserRequest {
+  string display_name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message CreateUserResponse {
+  bool is_user_created = 1;
+  bool is_user_already_exists = 2;
+  CreatedUser created_user = 3;
+}
+
 message FindOneRequest {
   int32 id = 1;
 }
 
 message FindOneResponse {
+  bool is_user_exists = 1;
+  User user = 2;
+}
+
+message FindByEmailRequest {
+  string email = 1;
+}
+
+message FindByEmailResponse {
   bool is_user_exists = 1;
   User user = 2;
 }
@@ -29,6 +55,8 @@ message FindByEmailAndPasswordResponse {
 }
 
 service UserService {
+  rpc createUser(CreateUserRequest) returns (CreateUserResponse);
   rpc findOne(FindOneRequest) returns (FindOneResponse);
+  rpc findByEmail(FindByEmailRequest) returns (FindByEmailResponse);
   rpc findByEmailAndPassword(FindByEmailAndPasswordRequest) returns (FindByEmailAndPasswordResponse);
 }
