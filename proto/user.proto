@@ -8,6 +8,10 @@ message User {
   string display_name = 3;
 }
 
+message Avatar {
+  string url = 1;
+}
+
 message CreatedUser {
   int32 id = 1;
   string confirm_code = 2;
@@ -54,9 +58,21 @@ message FindByEmailAndPasswordResponse {
   User user = 3;
 }
 
+message FindAvatarRequest {
+  int32 user_id = 1;
+}
+
+message FindAvatarResponse {
+  bool is_avatar_exists = 1;
+  Avatar avatar = 2;
+}
+
 service UserService {
   rpc createUser(CreateUserRequest) returns (CreateUserResponse);
+
   rpc findOne(FindOneRequest) returns (FindOneResponse);
   rpc findByEmail(FindByEmailRequest) returns (FindByEmailResponse);
   rpc findByEmailAndPassword(FindByEmailAndPasswordRequest) returns (FindByEmailAndPasswordResponse);
+
+  rpc findAvatar(FindAvatarRequest) returns (FindAvatarResponse);
 }
