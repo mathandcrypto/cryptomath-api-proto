@@ -2,14 +2,27 @@ syntax = "proto3";
 
 package user;
 
+enum Role {
+  USER = 0;
+  MODERATOR = 1;
+  ADMIN = 2;
+}
+
 message User {
   int32 id = 1;
   string email = 2;
-  string display_name = 3;
+  Role role = 3;
+  string display_name = 4;
 }
 
 message Avatar {
   string url = 1;
+}
+
+message Profile {
+  string bio = 1;
+  string url = 2;
+  string location = 3;
 }
 
 message CreatedUser {
@@ -67,6 +80,15 @@ message FindAvatarResponse {
   Avatar avatar = 2;
 }
 
+message FindProfileRequest {
+  int32 user_id = 1;
+}
+
+message FindProfileResponse {
+  bool is_profile_exists = 1;
+  Profile profile = 2;
+}
+
 service UserService {
   rpc createUser(CreateUserRequest) returns (CreateUserResponse);
 
@@ -75,4 +97,5 @@ service UserService {
   rpc findByEmailAndPassword(FindByEmailAndPasswordRequest) returns (FindByEmailAndPasswordResponse);
 
   rpc findAvatar(FindAvatarRequest) returns (FindAvatarResponse);
+  rpc findProfile(FindProfileRequest) returns (FindProfileResponse);
 }
