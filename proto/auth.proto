@@ -9,15 +9,26 @@ message AccessSession {
   google.protobuf.Timestamp updated_at = 3;
 }
 
+message RefreshSession {
+  int32 id = 1;
+  string ip = 2;
+  string user_agent = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
 message CreateAccessSessionRequest {
   int32 user_id = 1;
+  string ip = 2;
+  string user_agent = 3;
 }
 
 message CreateAccessSessionResponse {
   bool is_access_session_created = 1;
   bool is_refresh_session_created = 2;
-  string access_secret = 3;
-  string refresh_secret = 4;
+  int32 access_session_id = 3;
+  string access_secret = 4;
+  int32 refresh_session_id = 5;
+  string refresh_secret = 6;
 }
 
 message ValidateAccessSessionRequest {
@@ -37,6 +48,7 @@ message DeleteAccessSessionRequest {
 
 message DeleteAccessSessionResponse {
   bool is_session_deleted = 1;
+  AccessSession access_session = 2;
 }
 
 message ValidateRefreshSessionRequest {
@@ -47,6 +59,7 @@ message ValidateRefreshSessionRequest {
 message ValidateRefreshSessionResponse {
   bool is_session_exists = 1;
   bool is_session_expired = 2;
+  RefreshSession refresh_session = 3;
 }
 
 message DeleteRefreshSessionRequest {
@@ -56,6 +69,7 @@ message DeleteRefreshSessionRequest {
 
 message DeleteRefreshSessionResponse {
   bool is_session_deleted = 1;
+  RefreshSession refresh_session = 2;
 }
 
 message DeleteAllUserSessionsRequest {

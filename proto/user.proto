@@ -16,7 +16,9 @@ message User {
 }
 
 message Avatar {
-  string url = 1;
+  int32 id = 1;
+  string key = 2;
+  string url = 3;
 }
 
 message Profile {
@@ -75,6 +77,28 @@ message FindAvatarRequest {
   int32 user_id = 1;
 }
 
+message CreateAvatarRequest {
+  int32 user_id = 1;
+  string key = 2;
+  string url = 3;
+}
+
+message CreateAvatarResponse {
+  bool is_avatar_created = 1;
+  bool is_avatar_already_exists = 2;
+  Avatar avatar = 3;
+}
+
+message DeleteAvatarRequest {
+  int32 user_id = 1;
+  int32 avatar_id = 2;
+}
+
+message DeleteAvatarResponse {
+  bool is_avatar_deleted = 1;
+  Avatar avatar = 2;
+}
+
 message FindAvatarResponse {
   bool is_avatar_exists = 1;
   Avatar avatar = 2;
@@ -97,5 +121,8 @@ service UserService {
   rpc findByEmailAndPassword(FindByEmailAndPasswordRequest) returns (FindByEmailAndPasswordResponse);
 
   rpc findAvatar(FindAvatarRequest) returns (FindAvatarResponse);
+  rpc createAvatar(CreateAvatarRequest) returns (CreateAvatarResponse);
+  rpc deleteAvatar(DeleteAvatarRequest) returns (DeleteAvatarResponse);
+
   rpc findProfile(FindProfileRequest) returns (FindProfileResponse);
 }
