@@ -1,0 +1,40 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+package filters;
+
+message IdFilter {
+  int32 id = 1;
+}
+
+message IdListFilter {
+  repeated int32 id_list = 1;
+}
+
+message TextFilter {
+  string text = 1;
+}
+
+message NumericIntegerFilter {
+  oneof operators {
+    int32 equals = 1;
+    int32 min = 2;
+    int32 max = 3;
+  }
+}
+
+message NumericFloatFilter {
+  oneof operators {
+    float equals = 1;
+    float min = 2;
+    float max = 3;
+  }
+}
+
+message DateFilter {
+  oneof operators {
+    google.protobuf.Timestamp equals = 1;
+    google.protobuf.Timestamp start = 2;
+    google.protobuf.Timestamp end = 3;
+  }
+}

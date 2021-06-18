@@ -9,7 +9,7 @@
   "author": "@mathandcrypto",
   "private": true,
   "dependencies": {
-    "ts-proto": "^1.79.2"
+    "ts-proto": "^1.81.3"
   },
   "peerDependencies": {
     "@nestjs/microservices": "^7.0.0",

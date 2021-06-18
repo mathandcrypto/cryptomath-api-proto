@@ -1,5 +1,7 @@
 # compiled output
 /node_modules
+/proto/*.ts
+/proto/*.js
 /types/*
 /proto/google/*
 
