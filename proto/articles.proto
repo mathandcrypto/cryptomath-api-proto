@@ -57,6 +57,20 @@ message ArticlesSorts {
   sorts.SortOrder created_at = 4;
 }
 
+message HubsFilters {
+  filters.IdFilter id = 1;
+  filters.TextFilter name = 2;
+  filters.IdListFilter tags_list = 3;
+  filters.NumericIntegerFilter articles = 4;
+  filters.NumericIntegerFilter tags = 5;
+}
+
+message HubsSorts {
+  sorts.SortOrder name = 1;
+  sorts.SortOrder articles = 2;
+  sorts.SortOrder tags = 3;
+}
+
 message FindArticlesRequest {
   ArticlesFilters filters = 1;
   ArticlesSorts sorts = 2;
@@ -71,6 +85,21 @@ message FindArticlesResponse {
   int32 total = 4;
 }
 
+message FindHubsRequest {
+  HubsFilters filters = 1;
+  HubsSorts sorts = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+}
+
+message FindHubsResponse {
+  bool is_hubs_found = 1;
+  repeated Hub hubs = 2;
+  int32 limit = 3;
+  int32 total = 4;
+}
+
 service ArticlesService {
   rpc findArticles(FindArticlesRequest) returns (FindArticlesResponse);
+  rpc findHubs(FindHubsRequest) returns (FindHubsResponse);
 }
