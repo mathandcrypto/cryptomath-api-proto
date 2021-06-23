@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
 import "filters.proto";
 import "sorts.proto";
 
@@ -10,45 +9,57 @@ message Article {
   string title = 2;
   string abstract = 3;
   int32 user_id = 4;
-  repeated ArticleHub hubs = 5;
-  repeated ArticleTag tags = 6;
+  repeated Hub hubs = 5;
+  repeated Tag tags = 6;
   int32 comments_count = 7;
-  float rating = 8;
-  google.protobuf.Timestamp created_at = 9;
-  google.protobuf.Timestamp updated_at = 10;
+  int32 rating = 8;
+  int64 created_at = 9;
+  int64 updated_at = 10;
 }
 
-message ArticleHub {
+message HubLogo {
+  int32 id = 1;
+  string key = 2;
+  string url = 3;
+}
+
+message Hub {
   int32 id = 1;
   string name = 2;
+  string description = 3;
+  HubLogo logo = 4;
+  int32 articles_count = 5;
+  int32 tags_count = 6;
 }
 
-message ArticleTag {
+message Tag {
   int32 id = 1;
   string name = 2;
+  string description = 3;
+  int32 articles_count = 4;
 }
 
-message ArticleFilters {
+message ArticlesFilters {
   filters.IdFilter id = 1;
   filters.TextFilter title = 2;
   filters.IdFilter user = 3;
   filters.IdListFilter hubs = 4;
   filters.IdListFilter tags = 5;
   filters.NumericIntegerFilter comments = 6;
-  filters.NumericFloatFilter rating = 7;
-  filters.DateFilter created_at = 8;
+  filters.NumericIntegerFilter rating = 7;
+  filters.DateTimeFilter created_at = 8;
 }
 
-message ArticleSorts {
+message ArticlesSorts {
   sorts.SortOrder title = 1;
-  sorts.SortOrder comments_count = 2;
+  sorts.SortOrder comments = 2;
   sorts.SortOrder rating = 3;
   sorts.SortOrder created_at = 4;
 }
 
 message FindArticlesRequest {
-  ArticleFilters filters = 1;
-  ArticleSorts sorts = 2;
+  ArticlesFilters filters = 1;
+  ArticlesSorts sorts = 2;
   int32 limit = 3;
   int32 offset = 4;
 }

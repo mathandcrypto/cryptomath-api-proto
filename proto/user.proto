@@ -13,6 +13,9 @@ message User {
   string email = 2;
   Role role = 3;
   string display_name = 4;
+  int32 reputation = 5;
+  Avatar avatar = 6;
+  int64 created_at = 7;
 }
 
 message Avatar {
@@ -73,6 +76,15 @@ message FindByEmailAndPasswordResponse {
   User user = 3;
 }
 
+message FindFromListRequest {
+  repeated int32 id_list = 1;
+}
+
+message FindFromListResponse {
+  bool is_users_found = 1;
+  map<int32, User> users = 2;
+}
+
 message FindAvatarRequest {
   int32 user_id = 1;
 }
@@ -119,6 +131,7 @@ service UserService {
   rpc findOne(FindOneRequest) returns (FindOneResponse);
   rpc findByEmail(FindByEmailRequest) returns (FindByEmailResponse);
   rpc findByEmailAndPassword(FindByEmailAndPasswordRequest) returns (FindByEmailAndPasswordResponse);
+  rpc findFromList(FindFromListRequest) returns (FindFromListResponse);
 
   rpc findAvatar(FindAvatarRequest) returns (FindAvatarResponse);
   rpc createAvatar(CreateAvatarRequest) returns (CreateAvatarResponse);

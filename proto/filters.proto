@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
 
 package filters;
 
@@ -31,10 +30,9 @@ message NumericFloatFilter {
   }
 }
 
-message DateFilter {
+message DateTimeFilter {
   oneof operators {
-    google.protobuf.Timestamp equals = 1;
-    google.protobuf.Timestamp start = 2;
-    google.protobuf.Timestamp end = 3;
+    int64 start = 2;
+    int64 end = 3;
   }
 }
