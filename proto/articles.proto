@@ -36,7 +36,8 @@ message Tag {
   int32 id = 1;
   string name = 2;
   string description = 3;
-  int32 articles_count = 4;
+  Hub hub = 4;
+  int32 articles_count = 5;
 }
 
 message ArticlesFilters {
@@ -71,6 +72,18 @@ message HubsSorts {
   sorts.SortOrder tags = 3;
 }
 
+message TagsFilters {
+  filters.IdFilter id = 1;
+  filters.TextFilter name = 2;
+  filters.IdFilter hub = 3;
+  filters.NumericIntegerFilter articles = 4;
+}
+
+message TagsSorts {
+  sorts.SortOrder name = 1;
+  sorts.SortOrder articles = 2;
+}
+
 message FindArticlesRequest {
   ArticlesFilters filters = 1;
   ArticlesSorts sorts = 2;
@@ -99,7 +112,22 @@ message FindHubsResponse {
   int32 total = 4;
 }
 
+message FindTagsRequest {
+  TagsFilters filters = 1;
+  TagsSorts sorts = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+}
+
+message FindTagsResponse {
+  bool is_tags_found = 1;
+  repeated Tag tags = 2;
+  int32 limit = 3;
+  int32 total = 4;
+}
+
 service ArticlesService {
   rpc findArticles(FindArticlesRequest) returns (FindArticlesResponse);
   rpc findHubs(FindHubsRequest) returns (FindHubsResponse);
+  rpc findTags(FindTagsRequest) returns (FindTagsResponse);
 }
