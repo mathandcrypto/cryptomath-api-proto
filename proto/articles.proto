@@ -126,8 +126,29 @@ message FindTagsResponse {
   int32 total = 4;
 }
 
+message FindHubRequest {
+  int32 hub_id = 1;
+}
+
+message FindHubResponse {
+  bool is_hub_exists = 1;
+  Hub hub = 2;
+}
+
+message FindTagRequest {
+  int32 tag_id = 1;
+}
+
+message FindTagResponse {
+  bool is_tag_exists = 1;
+  Tag tag = 2;
+}
+
 service ArticlesService {
   rpc findArticles(FindArticlesRequest) returns (FindArticlesResponse);
   rpc findHubs(FindHubsRequest) returns (FindHubsResponse);
   rpc findTags(FindTagsRequest) returns (FindTagsResponse);
+
+  rpc findHub(FindHubRequest) returns (FindHubResponse);
+  rpc findTag(FindTagRequest) returns (FindTagResponse);
 }
