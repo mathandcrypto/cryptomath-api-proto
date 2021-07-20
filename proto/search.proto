@@ -1,0 +1,35 @@
+syntax = "proto3";
+import "filters.proto";
+import "sorts.proto";
+
+package search;
+
+message HubsFilters {
+  filters.NumericIntegerFilter articles = 4;
+  filters.NumericIntegerFilter tags = 5;
+}
+
+message HubsSorts {
+  sorts.SortOrder name = 1;
+  sorts.SortOrder articles = 2;
+  sorts.SortOrder tags = 3;
+}
+
+message SearchHubsRequest {
+  string query = 1;
+  HubsFilters filters = 2;
+  HubsSorts sorts = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+
+message SearchHubsResponse {
+  bool is_hubs_found = 1;
+  repeated int32 hubs_id_list = 2;
+  int32 limit = 3;
+  int32 total = 4;
+}
+
+service SearchService {
+  rpc searchHubs(SearchHubsRequest) returns (SearchHubsResponse);
+}

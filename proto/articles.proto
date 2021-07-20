@@ -144,6 +144,16 @@ message FindTagResponse {
   Tag tag = 2;
 }
 
+message CreateHubRequest {
+  string name = 1;
+  string description = 2;
+}
+
+message CreateHubResponse {
+  bool is_hub_created = 1;
+  Hub hub = 2;
+}
+
 service ArticlesService {
   rpc findArticles(FindArticlesRequest) returns (FindArticlesResponse);
   rpc findHubs(FindHubsRequest) returns (FindHubsResponse);
@@ -151,4 +161,6 @@ service ArticlesService {
 
   rpc findHub(FindHubRequest) returns (FindHubResponse);
   rpc findTag(FindTagRequest) returns (FindTagResponse);
+
+  rpc creteHub(CreateHubRequest) returns (CreateHubResponse);
 }
