@@ -1,13 +1,13 @@
 {
   "name": "@cryptomath/cryptomath-api-proto",
-  "version": "1.0.0",
+  "repository": "https://github.com/mathandcrypto/cryptomath-api-proto",
+  "version": "1.0.1",
   "description": "A set of .proto files for the CryptoMath API",
   "scripts": {
     "build": "./build.sh",
     "prepublishOnly": "npm run build"
   },
   "author": "@mathandcrypto",
-  "private": true,
   "dependencies": {
     "ts-proto": "^1.82.5"
   },
