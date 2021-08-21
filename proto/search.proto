@@ -4,6 +4,13 @@ import "sorts.proto";
 
 package search;
 
+message Hit {
+  string index = 1;
+  string id = 2;
+  float score = 3;
+  int32 source_id = 4;
+}
+
 message HubsFilters {
   filters.NumericIntegerFilter articles = 4;
   filters.NumericIntegerFilter tags = 5;
@@ -13,6 +20,16 @@ message HubsSorts {
   sorts.SortOrder name = 1;
   sorts.SortOrder articles = 2;
   sorts.SortOrder tags = 3;
+}
+
+message TagsFilters {
+  filters.IdFilter hub = 1;
+  filters.NumericIntegerFilter articles = 2;
+}
+
+message TagsSorts {
+  sorts.SortOrder name = 1;
+  sorts.SortOrder articles = 2;
 }
 
 message SearchHubsRequest {
@@ -25,11 +42,29 @@ message SearchHubsRequest {
 
 message SearchHubsResponse {
   bool is_hubs_found = 1;
-  repeated int32 hubs_id_list = 2;
-  int32 limit = 3;
-  int32 total = 4;
+  repeated Hit hubs = 2;
+  int32 took = 3;
+  int32 limit = 4;
+  int32 total = 5;
 }
 
-service SearchService {
+message SearchTagsRequest {
+  string query = 1;
+  TagsFilters filters = 2;
+  TagsSorts sorts = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+
+message SearchTagsResponse {
+  bool is_tags_found = 1;
+  repeated Hit tags = 2;
+  int32 took = 3;
+  int32 limit = 4;
+  int32 total = 5;
+}
+
+service SearchArticlesService {
   rpc searchHubs(SearchHubsRequest) returns (SearchHubsResponse);
+  rpc searchTags(SearchTagsRequest) returns (SearchTagsResponse);
 }

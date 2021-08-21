@@ -1,18 +1,18 @@
 {
-  "name": "cryptomath-api-proto",
+  "name": "@cryptomath/cryptomath-api-proto",
   "version": "1.0.0",
   "description": "A set of .proto files for the CryptoMath API",
   "scripts": {
     "build": "./build.sh",
-    "postinstall": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "author": "@mathandcrypto",
   "private": true,
   "dependencies": {
-    "ts-proto": "^1.81.3"
+    "ts-proto": "^1.82.5"
   },
   "peerDependencies": {
-    "@nestjs/microservices": "^7.0.0",
-    "rxjs": "^6.0.0"
+    "@nestjs/microservices": "^8.0.6",
+    "rxjs": "^7.3.0"
   }
 }

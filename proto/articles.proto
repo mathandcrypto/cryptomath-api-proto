@@ -112,6 +112,15 @@ message FindHubsResponse {
   int32 total = 4;
 }
 
+message FindHubsFromListRequest {
+  repeated int32 id_list = 1;
+}
+
+message FindHubsFromListResponse {
+  bool is_hubs_found = 1;
+  map<int32, Hub> hubs = 2;
+}
+
 message FindTagsRequest {
   TagsFilters filters = 1;
   TagsSorts sorts = 2;
@@ -124,6 +133,15 @@ message FindTagsResponse {
   repeated Tag tags = 2;
   int32 limit = 3;
   int32 total = 4;
+}
+
+message FindTagsFromListRequest {
+  repeated int32 id_list = 1;
+}
+
+message FindTagsFromListResponse {
+  bool is_tags_found = 1;
+  map<int32, Tag> tags = 2;
 }
 
 message FindHubRequest {
@@ -154,13 +172,46 @@ message CreateHubResponse {
   Hub hub = 2;
 }
 
+message CreateTagRequest {
+  int32 hub_id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message CreateTagResponse {
+  bool is_tag_created = 1;
+  Tag tag = 2;
+}
+
+message FindHubSearchIdRequest {
+  int32 hub_id = 1;
+}
+
+message FindHubSearchIdResponse {
+  bool is_hub_indexed = 1;
+  string document_id = 2;
+}
+
 service ArticlesService {
   rpc findArticles(FindArticlesRequest) returns (FindArticlesResponse);
+}
+
+service HubsService {
   rpc findHubs(FindHubsRequest) returns (FindHubsResponse);
-  rpc findTags(FindTagsRequest) returns (FindTagsResponse);
+  rpc findHubsFromList(FindHubsFromListRequest) returns (FindHubsFromListResponse);
 
   rpc findHub(FindHubRequest) returns (FindHubResponse);
-  rpc findTag(FindTagRequest) returns (FindTagResponse);
 
   rpc creteHub(CreateHubRequest) returns (CreateHubResponse);
+
+  rpc findHubSearchId(FindHubSearchIdRequest) returns (FindHubSearchIdResponse);
+}
+
+service TagsService {
+  rpc findTags(FindTagsRequest) returns (FindTagsResponse);
+  rpc findTagsFromList(FindTagsFromListRequest) returns (FindTagsFromListResponse);
+
+  rpc findTag(FindTagRequest) returns (FindTagResponse);
+
+  rpc createTag(CreateTagRequest) returns (CreateTagResponse);
 }

@@ -4,12 +4,10 @@ package captcha;
 
 message TaskPayload {
   string uuid = 1;
-  repeated int32 params = 2;
+  int32 difficulty = 2;
 }
 
-message GenerateTaskRequest {
-  int32 difficulty = 1;
-}
+message GenerateTaskRequest {}
 
 message GenerateTaskResponse {
   bool is_task_generated = 1;
@@ -19,7 +17,6 @@ message GenerateTaskResponse {
 
 message ValidateTaskRequest {
   string uuid = 1;
-  repeated int32 params = 2;
   int32 answer = 3;
 }
 
