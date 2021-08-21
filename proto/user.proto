@@ -2,10 +2,32 @@ syntax = "proto3";
 
 package user;
 
+enum Role {
+  USER = 0;
+  MODERATOR = 1;
+  ADMIN = 2;
+}
+
 message User {
   int32 id = 1;
   string email = 2;
-  string display_name = 3;
+  Role role = 3;
+  string display_name = 4;
+  int32 reputation = 5;
+  Avatar avatar = 6;
+  int64 created_at = 7;
+}
+
+message Avatar {
+  int32 id = 1;
+  string key = 2;
+  string url = 3;
+}
+
+message Profile {
+  string bio = 1;
+  string url = 2;
+  string location = 3;
 }
 
 message CreatedUser {
@@ -54,9 +76,66 @@ message FindByEmailAndPasswordResponse {
   User user = 3;
 }
 
+message FindFromListRequest {
+  repeated int32 id_list = 1;
+}
+
+message FindFromListResponse {
+  bool is_users_found = 1;
+  map<int32, User> users = 2;
+}
+
+message FindAvatarRequest {
+  int32 user_id = 1;
+}
+
+message CreateAvatarRequest {
+  int32 user_id = 1;
+  string key = 2;
+  string url = 3;
+}
+
+message CreateAvatarResponse {
+  bool is_avatar_created = 1;
+  bool is_avatar_already_exists = 2;
+  Avatar avatar = 3;
+}
+
+message DeleteAvatarRequest {
+  int32 user_id = 1;
+  int32 avatar_id = 2;
+}
+
+message DeleteAvatarResponse {
+  bool is_avatar_deleted = 1;
+  Avatar avatar = 2;
+}
+
+message FindAvatarResponse {
+  bool is_avatar_exists = 1;
+  Avatar avatar = 2;
+}
+
+message FindProfileRequest {
+  int32 user_id = 1;
+}
+
+message FindProfileResponse {
+  bool is_profile_exists = 1;
+  Profile profile = 2;
+}
+
 service UserService {
   rpc createUser(CreateUserRequest) returns (CreateUserResponse);
+
   rpc findOne(FindOneRequest) returns (FindOneResponse);
   rpc findByEmail(FindByEmailRequest) returns (FindByEmailResponse);
   rpc findByEmailAndPassword(FindByEmailAndPasswordRequest) returns (FindByEmailAndPasswordResponse);
+  rpc findFromList(FindFromListRequest) returns (FindFromListResponse);
+
+  rpc findAvatar(FindAvatarRequest) returns (FindAvatarResponse);
+  rpc createAvatar(CreateAvatarRequest) returns (CreateAvatarResponse);
+  rpc deleteAvatar(DeleteAvatarRequest) returns (DeleteAvatarResponse);
+
+  rpc findProfile(FindProfileRequest) returns (FindProfileResponse);
 }

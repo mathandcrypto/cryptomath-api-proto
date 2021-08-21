@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package sorts;
+
+enum SortDirection {
+  ASC = 0;
+  DESC = 1;
+}
+
+message SortOrder {
+  SortDirection direction = 1;
+}

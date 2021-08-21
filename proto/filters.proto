@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package filters;
+
+message IdFilter {
+  int32 id = 1;
+}
+
+message IdListFilter {
+  repeated int32 id_list = 1;
+}
+
+message TextFilter {
+  string text = 1;
+}
+
+message NumericIntegerFilter {
+  oneof operators {
+    int32 equals = 1;
+    int32 min = 2;
+    int32 max = 3;
+  }
+}
+
+message NumericFloatFilter {
+  oneof operators {
+    float equals = 1;
+    float min = 2;
+    float max = 3;
+  }
+}
+
+message DateTimeFilter {
+  oneof operators {
+    int64 start = 2;
+    int64 end = 3;
+  }
+}

@@ -1,23 +1,29 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
 
 package auth;
 
 message AccessSession {
-  int32 id = 1;
-  google.protobuf.Timestamp created_at = 2;
-  google.protobuf.Timestamp updated_at = 3;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+}
+
+message RefreshSession {
+  string ip = 2;
+  string user_agent = 3;
+  int64 created_at = 4;
 }
 
 message CreateAccessSessionRequest {
   int32 user_id = 1;
+  string ip = 2;
+  string user_agent = 3;
 }
 
 message CreateAccessSessionResponse {
   bool is_access_session_created = 1;
   bool is_refresh_session_created = 2;
-  string access_secret = 3;
-  string refresh_secret = 4;
+  string access_secret = 4;
+  string refresh_secret = 6;
 }
 
 message ValidateAccessSessionRequest {
@@ -37,6 +43,7 @@ message DeleteAccessSessionRequest {
 
 message DeleteAccessSessionResponse {
   bool is_session_deleted = 1;
+  AccessSession access_session = 2;
 }
 
 message ValidateRefreshSessionRequest {
@@ -47,6 +54,7 @@ message ValidateRefreshSessionRequest {
 message ValidateRefreshSessionResponse {
   bool is_session_exists = 1;
   bool is_session_expired = 2;
+  RefreshSession refresh_session = 3;
 }
 
 message DeleteRefreshSessionRequest {
@@ -56,6 +64,7 @@ message DeleteRefreshSessionRequest {
 
 message DeleteRefreshSessionResponse {
   bool is_session_deleted = 1;
+  RefreshSession refresh_session = 2;
 }
 
 message DeleteAllUserSessionsRequest {
