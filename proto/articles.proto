@@ -153,6 +153,37 @@ message FindHubResponse {
   Hub hub = 2;
 }
 
+message FindHubLogoRequest {
+  int32 hub_id = 1;
+}
+
+message FindHubLogoResponse {
+  bool is_logo_exists = 1;
+  HubLogo logo = 2;
+}
+
+message CreateHubLogoRequest {
+  int32 hub_id = 1;
+  string key = 2;
+  string url = 3;
+}
+
+message CreateHubLogoResponse {
+  bool is_logo_created = 1;
+  bool is_logo_already_exists = 2;
+  HubLogo logo = 3;
+}
+
+message DeleteHubLogoRequest {
+  int32 hub_id = 1;
+  int32 logo_id = 2;
+}
+
+message DeleteHubLogoResponse {
+  bool is_logo_deleted = 1;
+  HubLogo logo = 2;
+}
+
 message FindTagRequest {
   int32 tag_id = 1;
 }
@@ -201,6 +232,10 @@ service HubsService {
   rpc findHubsFromList(FindHubsFromListRequest) returns (FindHubsFromListResponse);
 
   rpc findHub(FindHubRequest) returns (FindHubResponse);
+
+  rpc findHubLogo(FindHubLogoRequest) returns (FindHubLogoResponse);
+  rpc createHubLogo(CreateHubLogoRequest) returns (CreateHubLogoResponse);
+  rpc deleteHubLogo(DeleteHubLogoRequest) returns (DeleteHubLogoResponse);
 
   rpc creteHub(CreateHubRequest) returns (CreateHubResponse);
 
